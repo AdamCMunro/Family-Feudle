@@ -1,4 +1,4 @@
-const answerData = '[{ "date": "2024-1-31", "question": "Name an occupation that begins with the letter J.", "answers": ["Janitor", "Jeweler", "Jockey", "Journalist", "Judge"]}]'
+const answerData = '[{ "date": "2024-1-31", "question": "Name an occupation that begins with the letter J.", "answers": ["Janitor", "Judge", "Jeweler", "Journalist", "Jockey", "Juggler"]}]'
 var answers = [];
 var correct = []
 var wrongGuess = 0;
