@@ -1,0 +1,152 @@
+html, body {
+    height:100%;
+}
+#main {
+    min-height:100%;
+}
+
+#logo {
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#guess {
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 75px;
+    height: 30px;
+    background-color: #1b1b1c;
+    outline: 5px solid #151516;
+    color: #FFFF;
+    font-size: 12pt;;
+
+}
+
+.attempt {
+    height:25px;
+    width: 25px;
+    background-color: #505053;
+    display: block;
+    margin-bottom: 22px;
+    margin-left: 5px;
+    border-radius: 25px;
+}
+
+#question {
+    outline: 7.5px solid #1b1b1c;
+    padding: 3px;
+    padding-top: 20px;
+    background-color: #37373b;
+    font-size: 12pt;
+    margin-top: -30px;
+}
+
+.answer {
+    font-size: 20pt;
+    padding-top: 3px;
+}
+
+#guessBtn {
+    margin-top: -8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    height: 35px;
+    font-size: 10pt;
+    background-color: #3F84FF;
+}
+
+#guessBtn:hover {
+    background-color: #8CB5FF;
+}
+
+#guess, #guessBtn, #question, .answer {
+    color: #FFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media (min-width: 800px) {
+    #logo {
+        width: 20%;
+        margin-top: - 75px;
+    }
+    .answer {
+        width: 25%;
+    }
+    #guess {
+        width: 20%;
+    }
+    #question {
+        width: 35%;
+    }
+}
+
+@media (max-width: 800px) {
+    #logo {
+        width: 50%;
+        margin-top: 0px;
+    }
+    .answer, #guess {
+        width: 80%;
+    }
+    #question {
+        width: 90%;
+    }
+
+}
+
+.answer, #guess, #question {
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.answer {
+    outline: 7.5px solid #1b1b1c;
+    height: 45px;
+}
+
+.flip {
+    animation-name: flip;
+    animation-duration: 2s;
+    animation-fill-mode: both;
+}
+
+@keyframes flip {
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.shake {
+    animation-name: shake;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+    }
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-4px);
+    }
+    
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(4px);
+    }
+    }
