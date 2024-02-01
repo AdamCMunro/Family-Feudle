@@ -1,4 +1,4 @@
-const answerData = '[{ "date": "2024-1-31", "question": "Name an occupation that begins with the letter J.", "answers": ["Janitor", "Judge", "Jeweler", "Journalist", "Jockey", "Juggler"]}]'
+const answerData = '[{ "date": "2024-2-1", "question": "Name something associated with vampires.", "answers": ["Twilight (33)", "Blood (29)", "Garlic (9)", "Bat (7)", "Cape (7)", "Dracula (5)", "Fangs (4)", "Halloween (4)"]}]'
 var answers = [];
 var correct = []
 var wrongGuess = 0;
@@ -24,13 +24,34 @@ function readIn() {
     questionText.innerHTML = question;
     questionBox.appendChild(questionText);
     answerDiv = document.getElementById("answerBox");
+    if (answers.length > 4) {
+        answerDiv.classList.add("row");
+        answerDiv.classList.add("mx-auto");
+        answerColLeft = document.createElement("div");
+        answerColLeft.classList.add("col");
+        answerDiv.appendChild(answerColLeft);
+        answerColRight = document.createElement("div");
+        answerColRight.classList.add("col");
+        answerColRight.setAttribute("id", "leftCol")
+        answerDiv.appendChild(answerColRight);
+    }
     for (let i = 0; i < answers.length; i++) {
         answerBox = document.createElement("div");
         answerBox = document.createElement("div");
         answerBox.classList.add("answer");
         answerBox.classList.add("container");
         answerBox.setAttribute("id", "answer" + i);
-        answerDiv.appendChild(answerBox);
+        if (answers.length > 4) {
+            if (i >= answers.length / 2) {
+                answerColRight.appendChild(answerBox);
+            }
+            else {
+                answerColLeft.appendChild(answerBox);
+            }
+        }
+        else {
+            answerDiv.appendChild(answerBox);
+        }
         correct[i] = "0";
 
     }
@@ -60,17 +81,20 @@ function getAnswer() {
 }
 
 async function guessFunction() {
+    guessBtn = document.getElementById("guessBtn");
+    if (!guessBtn.classList.contains("btnDisabled"))
+    {
     let correctGuess = false;
     guess = document.getElementById("guess").value;
-    guessBtn = document.getElementById("guessBtn");
     console.log(guess);
     for (let i = 0; i < answers.length; i++) {
         if (correct[i] == "0") {
             currentAnswerBox = document.getElementById("answer" + i);
             currentAnswerBox.style.backgroundColor = "#8CB5FF";
             currentAnswerBox.style.outlineColor = "#3F84FF";
-            await sleep(1500);
-            if (answers[i] == document.getElementById("guess").value) {
+            currentAnswerBox.classList.add("glow");
+            await sleep(1200);
+            if (checkAnswer(document.getElementById("guess").value, answers[i])) {
                 correctGuess = true;
                 correct[i] = "1";
                 currentAnswerBox.classList.add('flip');
@@ -81,10 +105,12 @@ async function guessFunction() {
                 })
                 await sleep(986);
                 currentAnswerBox.appendChild(answerText);
+                currentAnswerBox.classList.remove("glow");
                 rightGuess++;
                 break;
             }
             else if (correct[i] == "0") {
+                currentAnswerBox.classList.remove("glow");
                 currentAnswerBox.style.backgroundColor = "transparent";
                 currentAnswerBox.style.outlineColor = "#1b1b1c";
             }
@@ -106,10 +132,47 @@ async function guessFunction() {
             gameOver();
         }
     }
+}
 
 }
 
+function checkAnswer(guess, answer) {
+    answrArr = answer.split(" ");
+    answer = answrArr[0];
+    guess = guess.toLowerCase();
+    answer = answer.toLowerCase();
+    if (guess == answer) {
+        return true;
+    }
+    else if (answer.includes("/")) {
+        answrArr = answer.split("/");
+        for (let i = 0; i < answrArr.length; i++) {
+            if (guess == answrArr[i]) {
+                return true;
+            }
+            else if (answrArr[i].includes(" ")) {
+                answrArr2 = answer.split(" ");
+                for (let j = 0; j < answrArr2.length; j++) {
+                    if (guess == answrArr2[i]) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    else if (answer.includes(" ")) {
+        answrArr = answer.split(" ");
+        for (let j = 0; j < answrArr.length; j++) {
+            if (guess == answrArr[i]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 async function gameOver() {
+    disableGuessing();
     for (let i = 0; i < answers.length; i++) {
         if (correct[i] == "0") {
             currentAnswerBox = document.getElementById("answer" + i);
@@ -131,10 +194,25 @@ async function gameOver() {
 }
 
 function gameWin() {
+    disableGuessing();
     displayEndScreen(true);
 }
 
-function displayEndScreen(winLose)
-{
-
+function displayEndScreen(winLose) {
+    
 }
+
+function disableGuessing() {
+    guessBtn = document.getElementById("guessBtn");
+    guessBtn.classList.add("btnDisabled");
+    guess = document.getElementById("guess");
+    guess.classList.add("textDisabled");
+    guess.readOnly = true;
+}
+
+document.querySelector('#guess').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        event.preventDefault();
+        guessFunction();
+    }
+});
