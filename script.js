@@ -3,7 +3,7 @@ var answers = [];
 var correct = []
 var wrongGuess = 0;
 var rightGuess = 0;
-var score = 100;
+var score = 0;
 
 var sleepSetTimeout_ctrl;
 
@@ -12,7 +12,7 @@ function sleep(ms) {
     return new Promise(resolve => sleepSetTimeout_ctrl = setTimeout(resolve, ms));
 }
 
-window.addEventListener("load", readIn(), displayEndScreen(true));
+window.addEventListener("load", readIn());
 
 
 function readIn() {
